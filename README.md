@@ -1,95 +1,67 @@
-<<<<<<< HEAD
-## Activity Ranking API Contract
+# Activity Ranking API — Specification-First Test Automation
 
-Endpoint:
-
-POST /api/activity-rankings
-
-Request:
-
-{
-  "location": "London"
-}
-
-Response:
-
-{
-  "city": "London",
-  "forecastDays": 7,
-  "rankings": [
-    {
-      "date": "2026-11-18",
-      "activityName": "Surfing",
-      "suitability": "High",
-      "reasoning": "Strong wave conditions."
-    }
-  ]
-}
-
-
-
-# Activity Ranking API Test Automation
-
-![Node](https://img.shields.io/badge/node-20-green)
-
+![Node](https://img.shields.io/badge/node-22-green)
 ![TypeScript](https://img.shields.io/badge/typescript-5-blue)
-
 ![Cucumber](https://img.shields.io/badge/cucumber-BDD-brightgreen)
-
-![Status](https://github.com/<USER>/<REPO>/actions/workflows/ci.yml/badge.svg)
-
-
-# Activity Ranking API - Specification First Test Automation
+![Status](https://github.com/ajitshirsat2k8/collinson_api_framework/actions/workflows/ci.yml/badge.svg)
 
 ## Overview
 
-This repository contains a specification-first automated test framework for validating the Activity Ranking API.
+This repository contains a specification-first, BDD automated test framework for validating the **Activity Ranking API**. The API accepts a city or location query and returns weather-based activity recommendations backed by a 7-day forecast.
 
-The API accepts a location and returns weather-based activity recommendations using a 7-day weather forecast.
-
-The solution follows:
-
-- BDD
-- Contract Testing
-- Schema Validation
-- Mock-Driven Testing
-- CI/CD Best Practices
+The framework is built around:
+- **Behavior-Driven Development (BDD)** with Gherkin specifications
+- **Runtime Contract Validation** using Zod schemas
+- **Deterministic Mock-Driven Testing** via Nock
+- **Automated HTML & Allure Reporting**
+- **CI/CD Readiness** with GitHub Actions
 
 ---
 
 ## Technology Stack
 
 | Tool | Purpose |
-|--------|---------|
-| TypeScript | Language |
-| Cucumber | BDD |
-| Axios | API Communication |
-| Zod | Contract Validation |
-| Nock | Weather API Mocking |
-| Chai | Assertions |
-| GitHub Actions | CI/CD |
-| Cucumber Reporter | HTML Reporting |
+| :--- | :--- |
+| **TypeScript** | Strongly-typed test implementation |
+| **Cucumber.js** | BDD test runner & Gherkin execution |
+| **Axios** | HTTP client for API requests |
+| **Zod** | Runtime request/response contract validation |
+| **Nock** | HTTP interception & deterministic mocking |
+| **Chai** | Expressive test assertions |
+| **Cucumber HTML Reporter** | Standalone HTML execution reports |
+| **Allure** | Detailed test analytics & payload attachments |
+| **GitHub Actions** | Continuous Integration pipeline |
 
 ---
 
 ## Project Structure
 
 ```text
-src/
-features/
-reports/
-.github/
+├── .github/workflows/      # CI/CD pipeline definitions
+├── features/               # Gherkin .feature files & step definitions
+│   └── step-definitions/
+├── reports/                # Generated Cucumber JSON & HTML reports
+├── src/
+│   ├── assertions/         # Reusable business & HTTP assertions
+│   ├── clients/            # Axios API client wrappers
+│   ├── config/             # Environment & framework configuration
+│   ├── mocks/              # Nock interceptors, fixtures & mock context
+│   ├── schemas/            # Zod validation schemas & unit specs
+│   ├── support/            # Cucumber hooks, world setup & logger
+│   ├── types/              # TypeScript interfaces & types
+│   └── utils/              # Schema validator, Allure & response helpers
+├── cucumber.js             # Cucumber runner configuration
+├── package.json            # Dependencies & NPM scripts
+├── report-generator.ts     # HTML report builder script
+└── tsconfig.json           # TypeScript compiler configuration
 ```
 
 ---
 
-## Assumptions
+## API Contract & Assumptions
 
-### API Endpoint
-
-POST
-
-/api/activity-rankings
+### Endpoint
+`POST /api/activity-rankings`
 
 ### Request
 
@@ -116,392 +88,50 @@ POST
 }
 ```
 
----
-
-## Supported Activities
-
-- Skiing
-- Surfing
-- Outdoor Sightseeing
-- Indoor Sightseeing
-
----
-
-## Supported Suitability Levels
-
-- High
-- Medium
-- Low
+### Supported Domain Values
+- **Activities:** `Skiing`, `Surfing`, `Outdoor Sightseeing`, `Indoor Sightseeing`
+- **Suitability Levels:** `High`, `Medium`, `Low`
 
 ---
 
 ## Test Coverage
 
-### Happy Path
+The test suite currently executes **19 scenarios (69 steps)** covering:
 
-✓ Valid Request
-
-✓ Response Contract
-
-✓ Seven Day Forecast
-
-### Partial Match
-
-✓ Lon → London
-
-✓ Par → Paris
-
-### Validation
-
-✓ Empty Location
-
-✓ Missing Location
-
-✓ Invalid Characters
-
-✓ Long Input
-
-✓ Unknown City
-
-### Weather Failures
-
-✓ Open-Meteo Timeout
-
-✓ Open-Meteo 500
-
-### Business Rules
-
-✓ Skiing Ranking
-
-✓ Surfing Ranking
-
-✓ Outdoor Sightseeing Ranking
-
-✓ Indoor Sightseeing Ranking
-
-✓ Ranking Order
+- **Happy Path:** Valid city lookup, 7-day forecast verification, and strict Zod contract compliance.
+- **Partial Location Matching:** Query resolution (e.g., `Lon` → `London`, `Par` → `Paris`, `New` → `New York`).
+- **Input Validation:** Empty strings, missing fields, single-character inputs, inputs exceeding 100 characters, invalid special characters, and unknown cities (`404`).
+- **Weather Provider Resilience:** Graceful error handling for upstream timeouts (`504`) and server errors (`503`).
+- **Business Rules:** Weather-driven suitability ranking logic (snow → Skiing, waves → Surfing, clear → Outdoor Sightseeing, heavy rain → Indoor Sightseeing), reasoning presence, and descending suitability sort order.
 
 ---
 
-## Installation
+## Getting Started
+
+### Prerequisites
+- **Node.js** v20 or higher
+- **Java JDK 17+** *(required only if generating Allure reports locally)*
+
+### Installation
 
 ```bash
+git clone [https://github.com/ajitshirsat2k8/collinson_api_framework.git](https://github.com/ajitshirsat2k8/collinson_api_framework.git)
+cd collinson_api_framework
 npm install
 ```
 
 ---
 
-## Execute Tests
-
-```bash
-npm test
-```
-
----
-
-## Generate Report
-
-```bash
-npm run test:report
-```
-
----
-
-## Run CI Locally
-
-```bash
-npm run ci
-```
-
----
-
-## Design Decisions
-
-### Why BDD?
-
-Feature files serve as executable requirements.
-
-### Why Zod?
-
-Runtime contract validation prevents schema drift.
-
-### Why Nock?
-
-Tests remain deterministic and independent of external services.
-
-### Why Specification-First?
-
-The contract is validated before backend implementation exists.
-
----
-
-## Future Enhancements
-
-- Pact Contract Testing
-- Docker Support
-- Parallel Execution
-- Allure Reporting
-- Performance Testing
-
-
-
-# Installation
-
-Clone the repository:
-
-```bash
-git clone <repository-url>
-```
-
-Navigate to the project:
-
-```bash
-cd activity-ranking-api-tests
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
----
-
-# Running Tests
-
-## Execute Complete Test Suite
-
-```bash
-npm test
-```
-
-Expected Output:
-
-```text
-19 scenarios (19 passed)
-69 steps (69 passed)
-```
-
----
-
-## Execute Tests Using Cucumber CLI
-
-```bash
-npx cucumber-js
-```
-
----
-
-# TypeScript Validation
-
-Validate TypeScript compilation without generating files:
-
-```bash
-npx tsc --noEmit
-```
-
----
-
-# HTML Reporting
-
-## Run Test Suite
-
-```bash
-npm test
-```
-
-## Generate HTML Report
-
-```bash
-npm run report
-```
-
-or
-
-```bash
-node generate-report.js
-```
-
-## Open HTML Report
-
-```bash
-start reports/cucumber-report.html
-```
-
-HTML report location:
-
-```text
-reports/cucumber-report.html
-```
-
----
-
-# Allure Reporting
-
-## Execute Tests with Allure
-
-```bash
-npm run test:allure
-```
-
-Current Script:
-
-```json
-"test:allure": "rimraf reports allure-results allure-report && cucumber-js"
-```
-
-This generates:
-
-```text
-allure-results/
-```
-
----
-
-## Generate Allure Report
-
-```bash
-npx allure generate allure-results --clean
-```
-
-This generates:
-
-```text
-allure-report/
-```
-
----
-
-## Open Allure Report
-
-```bash
-npx allure open allure-report
-```
-
-If browser does not launch automatically:
-
-```bash
-http://127.0.0.1:<port>
-```
-
-Copy the URL into Chrome or Edge.
-
----
-
-## Serve Allure Report
-
-Alternative command:
-
-```bash
-npx allure serve allure-results
-```
-
-This will:
-
-```text
-Generate Report
-Start Local Server
-Open Browser
-```
-
----
-
-# Clean Reports
-
-Delete previous reports:
-
-```bash
-rimraf reports allure-results allure-report
-```
-
----
-
-# Verify Installed Versions
-
-## Cucumber Version
-
-```bash
-npm list @cucumber/cucumber
-```
-
-## Allure Cucumber Version
-
-```bash
-npm list allure-cucumberjs
-```
-
-## Allure Runtime Version
-
-```bash
-npm list allure-js-commons
-```
-
----
-
-# Recommended Execution Flow
-
-## Normal Execution
-
-```bash
-npm install
-npm test
-```
-
----
-
-## Generate HTML Report
-
-```bash
-npm test
-npm run report
-```
-
----
-
-## Generate Allure Report
-
-```bash
-npm run test:allure
-npx allure generate allure-results --clean
-npx allure open allure-report
-```
-
----
-
-# Useful NPM Scripts
-
-```bash
-npm install
-
-npm test
-
-npm run test:allure
-
-npm run report
-
-npm run lint
-
-npm run clean
-```
-
----
-
-# CI/CD Execution
-
-Example Pipeline Command:
-
-```bash
-npm ci
-npm test
-```
-
-Or with Allure:
-
-```bash
-npm ci
-npm run test:allure
-npx allure generate allure-results --clean
-```
-=======
-# collinson_test
->>>>>>> 4aa643be8b3ad04b500ed66c3d7113b29dd72bfb
+## Useful NPM Scripts
+
+| Script | Description |
+| :--- | :--- |
+| `npm test` | Runs all Cucumber BDD scenarios |
+| `npm run test:report` | Cleans reports, runs tests, and generates the HTML report |
+| `npm run report` | Generates the HTML report from existing JSON results |
+| `npm run test:allure` | Runs tests for Allure result collection |
+| `npm run allure:generate` | Builds the static Allure report site |
+| `npm run allure:open` | Launches the Allure report in your default browser |
+| `npm run lint` | Runs `tsc --noEmit` to verify TypeScript types |
+| `npm run clean` | Deletes `reports/`, `allure-results/`, and `allure-report/` |
+| `npm run ci` | Executes `lint` followed by `test:report` |
