@@ -1,0 +1,39 @@
+{
+  "name": "activity-ranking-api-tests",
+  "version": "1.0.0",
+  "description": "BDD API Testing Framework",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf reports allure-results allure-report",
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "test": "cucumber-js",
+    "report": "ts-node report-generator.ts",
+    "test:report": "npm run clean && cucumber-js && npm run report",
+    "ci": "npm run lint && npm run test:report",
+    "test:allure": "rimraf reports allure-results allure-report && cucumber-js",
+    "allure:generate": "allure generate allure-results --clean",
+    "allure:open": "allure open allure-report"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "chai": "^4.4.1",
+    "dotenv": "^16.4.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.0.0",
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.0.0",
+    "allure-commandline": "^2.46.1",
+    "allure-cucumberjs": "^3.15.0",
+    "allure-js-commons": "^3.15.0",
+    "cross-env": "^7.0.3",
+    "cucumber-html-reporter": "^7.2.0",
+    "nock": "^14.0.17",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

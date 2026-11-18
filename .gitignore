@@ -1,0 +1,12 @@
+node_modules
+dist
+reports
+.env
+coverage
+.DS_Store
+node_modules/
+allure-results/
+allure-report/
+reports/
+dist/
+coverage/

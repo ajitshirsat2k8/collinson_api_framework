@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "nodenext",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "moduleResolution": "nodenext",
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "node",
+      "mocha",
+      "@cucumber/cucumber"
+    ],
+    "rootDir": ".",
+    "outDir": "./dist"
+  },
+  "include": [
+    "src/**/*.ts",
+    "features/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
