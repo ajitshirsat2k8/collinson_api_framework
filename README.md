@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Activity Ranking API Contract
 
 Endpoint:
@@ -501,3 +502,6 @@ npm ci
 npm run test:allure
 npx allure generate allure-results --clean
 ```
+=======
+# collinson_test
+>>>>>>> 4aa643be8b3ad04b500ed66c3d7113b29dd72bfb
